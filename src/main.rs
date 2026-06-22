@@ -18,6 +18,14 @@ fn main() {
         print!("Enter message to send to server (or type 'exit' to quit): ");
         let mut message  =  String::new();
         io::stdin().read_line(&mut message).expect("Failed to read input from user");
+
+        let message = message.trim().to_string();
+        
+        if message.eq_ignore_ascii_case("exit") {
+            println!("Exiting...");
+            break;
+        }
+        
         let _ = stream.write_all(message.as_bytes()).expect("Failed to send message to server");
         let _ = stream.flush().expect("Failed to flush stream");
 
