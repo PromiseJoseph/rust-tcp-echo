@@ -1,8 +1,8 @@
-use std::io::{self, prelude::*};
+use std::io;
 use tokio::{io::AsyncWriteExt, net::TcpStream};
 use tokio::io::{AsyncReadExt};
 
-const SERVER_ADDR: &str = "localhost:7777"; // Address of the echo server
+const SERVER_ADDR: &str = "127.0.0.1:7778"; // Address of the EchoMambo-client server
 
 #[tokio::main]
 async fn main() {
