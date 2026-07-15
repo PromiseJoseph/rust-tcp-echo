@@ -6,11 +6,11 @@ const SERVER_ADDR: &str = "127.0.0.1:7778"; // Address of the EchoMambo-client s
 
 #[tokio::main]
 async fn main() {
+    let arg = std::env::args().nth(1);
+    let server_addr = arg.as_deref().unwrap_or(SERVER_ADDR);    
 
-    println!("Connecting to server at {SERVER_ADDR}...");
-    
     // Connect to the server
-    let mut stream = connect_to_server().await;   
+    let mut stream = connect_to_server(&server_addr).await;   
 
     println!("Connected to echo server at {}", 
         stream.peer_addr().unwrap()
@@ -57,11 +57,11 @@ async fn main() {
 }
 
 //=== Function to connect to the server ===//
-async fn connect_to_server() -> TcpStream {
+async fn connect_to_server(server_addr: &str) -> TcpStream {
 
-   if let Ok( stream) = TcpStream::connect(SERVER_ADDR).await {
+   if let Ok( stream) = TcpStream::connect(server_addr).await {
         stream
     } else {
-        panic!("Failed to connect to server at {SERVER_ADDR}");
+        panic!("Failed to connect to server at {server_addr}");
     }
 }
